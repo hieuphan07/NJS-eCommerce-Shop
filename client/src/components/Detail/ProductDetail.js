@@ -3,7 +3,7 @@ import useFetch from '../../hooks/useFetch';
 import { useParams, useNavigate, useLoaderData } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import BannerNavigation from '../../components/BannerNavigation';
+import BannerNavigation from '../Banner/BannerNavigation';
 
 import classes from './ProductDetail.module.css';
 

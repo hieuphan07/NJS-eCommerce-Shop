@@ -8,7 +8,7 @@ const RouteProtect = ({ children }) => {
 
 	useEffect(() => {
 		fetchHandler();
-	}, []);
+	}, [fetchHandler]);
 
 	if (!loading && !user) {
 		return <Navigate to='/login' />;

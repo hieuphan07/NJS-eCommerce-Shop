@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import BannerNavigation from '../../components/BannerNavigation';
+import BannerNavigation from '../Banner/BannerNavigation';
 import Thead from './ItemTable/Thead';
 import Tfoot from './ItemTable/Tfoot';
 import Item from './Item';

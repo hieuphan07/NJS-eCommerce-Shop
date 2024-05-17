@@ -3,8 +3,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import RootLayout from './pages/Root';
 import RouteProtect from './components/RouteProtect/RouteProtect';
-// import ErrorPage from "./pages/Error";
 import HomePage, { loader as homeProductsLoader } from './pages/Home';
+// import ErrorPage from "./pages/Error";
 // import ShopPage, { loader as shopProductsLoader } from "./pages/Shop";
 // import DetailPage from "./pages/Detail";
 // import CartPage from "./pages/Cart";
@@ -12,13 +12,14 @@ import HomePage, { loader as homeProductsLoader } from './pages/Home';
 // import LoginPage from "./pages/Login";
 // import RegisterPage from "./pages/Register";
 
+const Error = lazy(() => import('./pages/Error'));
 const Shop = lazy(() => import('./pages/Shop'));
 const Detail = lazy(() => import('./pages/Detail'));
 const Cart = lazy(() => import('./pages/Cart'));
 const Checkout = lazy(() => import('./pages/Checkout'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
-const Error = lazy(() => import('./pages/Error'));
+const History = lazy(() => import('./pages/History'));
 
 const router = createBrowserRouter([
 	{
@@ -106,6 +107,18 @@ const router = createBrowserRouter([
 						fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}
 					>
 						<Register />
+					</Suspense>
+				),
+			},
+			{
+				path: 'history/:userId',
+				element: (
+					<Suspense
+						fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}
+					>
+						<RouteProtect>
+							<History />
+						</RouteProtect>
 					</Suspense>
 				),
 			},

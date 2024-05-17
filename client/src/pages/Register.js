@@ -1,9 +1,7 @@
-import Signup from "../components/Register/Signup";
+import Signup from '../components/Register/Signup';
 
 const RegisterPage = () => {
-  return <div>
-    <Signup />
-  </div>
-}
+	return <Signup />;
+};
 
 export default RegisterPage;

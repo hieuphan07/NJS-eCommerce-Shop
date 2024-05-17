@@ -1,9 +1,7 @@
 import ShoppingCart from '../components/Cart/ShoppingCart';
 
 const CartPage = () => {
-  return <div>
-    <ShoppingCart />
-  </div>
-}
+	return <ShoppingCart />;
+};
 
 export default CartPage;

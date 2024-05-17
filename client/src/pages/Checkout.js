@@ -1,9 +1,7 @@
-import CheckoutDetail from "../components/Checkout/CheckoutDetail";
+import CheckoutDetail from '../components/Checkout/CheckoutDetail';
 
 const CheckoutPage = () => {
-  return <div>
-    <CheckoutDetail />
-  </div>
-}
+	return <CheckoutDetail />;
+};
 
 export default CheckoutPage;

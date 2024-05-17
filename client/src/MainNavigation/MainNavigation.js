@@ -53,6 +53,7 @@ const NavBar = () => {
 				console.log(err);
 			}
 		}
+
 		fetcher();
 	}, []);
 
@@ -101,6 +102,18 @@ const NavBar = () => {
 									{`(${numberItems})`}
 								</NavLink>
 							</li>
+							{loginedUser && (
+								<li>
+									<NavLink
+										to={'/history/' + loginedUser._id}
+										className={({ isActive }) =>
+											isActive ? classes.active : undefined
+										}
+									>
+										<i className='fa fa-th-list'></i> History
+									</NavLink>
+								</li>
+							)}
 							<li>
 								<NavLink
 									to='/login'

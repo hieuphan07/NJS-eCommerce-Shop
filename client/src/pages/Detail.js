@@ -1,9 +1,7 @@
 import ProductDetail from '../components/Detail/ProductDetail';
 
 const DetailPage = () => {
-  return <div>
-    <ProductDetail />
-  </div>
-}
+	return <ProductDetail />;
+};
 
 export default DetailPage;

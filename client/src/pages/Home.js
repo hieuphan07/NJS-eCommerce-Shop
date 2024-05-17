@@ -15,7 +15,7 @@ const HomePage = () => {
 	const dispatch = useDispatch();
 	const hideInfoHandler = useCallback(() => {
 		dispatch({ type: 'HIDE_INFO' });
-	}, []);
+	}, [dispatch]);
 
 	// Press 'escape" key to close popup
 	useEffect(() => {

@@ -12,4 +12,6 @@ router.post('/create-order', isAuth, productController.postOrder);
 
 router.get('/ordered-products', productController.getOrderedProducts);
 
+router.get('/orders/:userId', isAuth, productController.getOrder);
+
 module.exports = router;
