@@ -68,10 +68,17 @@ const ProductDetail = () => {
 
 	return (
 		<>
-			<BannerNavigation title='DETAIL' navigation='SHOP / ProductID' />
-			{productError && <h1>{productError.message}</h1>}
+			{/* Error message */}
+			{productError && (
+				<div className={classes.container}>
+					<BannerNavigation title='DETAIL' navigation='SHOP / ProductID' />
+					<h1>{productError.message}</h1>
+				</div>
+			)}
+			{/* Render main product */}
 			{!loading && mainProductInfo && (
 				<div className={classes.container}>
+					<BannerNavigation title='DETAIL' navigation='SHOP / ProductID' />
 					<div className={classes.wrapper}>
 						{/* Product images */}
 						<div className={classes.images}>
