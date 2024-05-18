@@ -1,0 +1,32 @@
+.history {
+	max-width: var(--max-w);
+	margin: 0 auto;
+
+	table {
+		border-collapse: collapse;
+		margin: 0 auto;
+		margin-top: 50px;
+		color: var(--grey-light);
+		font-style: italic;
+		text-align: center;
+		font-size: 14px;
+		min-width: var(--max-w);
+	}
+
+	th {
+		background-color: var(--main-grey);
+		color: #000;
+		font-weight: 600;
+	}
+
+	th,
+	td {
+		padding: 10px 5px;
+
+		button {
+			color: var(--grey-light);
+			font-style: italic;
+			font-size: 14px;
+		}
+	}
+}

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 
 import BannerNaigation from '../../components/Banner/BannerNavigation';
-import './HistoryContent.css';
+import classes from './HistoryContent.module.css';
 
 const HistoryContent = () => {
 	const { userId } = useParams();
@@ -19,7 +19,7 @@ const HistoryContent = () => {
 	}, []);
 
 	return (
-		<div>
+		<div className={classes.history}>
 			<BannerNaigation title='HISTORY' navigation='HISTORY' />
 			<table>
 				<thead>
@@ -46,11 +46,17 @@ const HistoryContent = () => {
 									<td>{order.contact.fullname}</td>
 									<td>{order.contact.phoneNumber}</td>
 									<td>{order.contact.address}</td>
-									<td>{order.items.total}</td>
+									<td>
+										{Number(order.total).toLocaleString('en', {
+											useGrouping: true,
+										}) +
+											' ' +
+											'VND'}
+									</td>
 									<td>Waiting for progressing</td>
 									<td>Waiting for pay</td>
 									<td>
-										<button>Detail</button>
+										<button>View ---</button>
 									</td>
 								</tr>
 							);
