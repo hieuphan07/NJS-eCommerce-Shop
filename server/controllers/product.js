@@ -94,10 +94,13 @@ exports.getOrderedProducts = async (req, res, next) => {
 	}
 };
 
-exports.getOrder = async (req, res, next) => {
-	const userId = req.session.user._id;
-	const orderByUser = await Order.find({ userId: userId });
+exports.getOrders = async (req, res, next) => {
+	// const userId = req.session.user._id;
+	const reqUserId = req.params.userId;
+	const orderByUser = await Order.find({ userId: reqUserId });
 	if (orderByUser) {
 		return res.status(200).json(orderByUser);
 	}
 };
+
+exports.getOrder = async (req, res, next) => {};

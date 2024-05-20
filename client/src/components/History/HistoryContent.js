@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 
 import BannerNaigation from '../../components/Banner/BannerNavigation';
 import classes from './HistoryContent.module.css';
 
 const HistoryContent = () => {
+	const navigate = useNavigate();
 	const { userId } = useParams();
 	const {
 		loading,
@@ -17,6 +18,10 @@ const HistoryContent = () => {
 	useEffect(() => {
 		fetchHandler();
 	}, []);
+
+	const goToDetailOrder = (orderId) => {
+		navigate(orderId);
+	};
 
 	return (
 		<div className={classes.history}>
@@ -35,34 +40,45 @@ const HistoryContent = () => {
 						<th>DETAIL</th>
 					</tr>
 				</thead>
-				<tbody>
-					{!loading &&
-						!error &&
-						orders?.map((order) => {
+				{!loading && !error && (
+					<tbody>
+						{orders?.map((order) => {
 							return (
 								<tr key={order._id}>
-									<td>{order._id}</td>
-									<td>{order.userId}</td>
-									<td>{order.contact.fullname}</td>
-									<td>{order.contact.phoneNumber}</td>
-									<td>{order.contact.address}</td>
-									<td>
+									<td className={classes.orderId}>{order._id}</td>
+									<td className={classes.userId}>{order.userId}</td>
+									<td className={classes.fullname}>{order.contact.fullname}</td>
+									<td className={classes.phoneNumber}>
+										{order.contact.phoneNumber}
+									</td>
+									<td className={classes.address}>{order.contact.address}</td>
+									<td className={classes.totalAmount}>
 										{Number(order.total).toLocaleString('en', {
 											useGrouping: true,
 										}) +
 											' ' +
 											'VND'}
 									</td>
-									<td>Waiting for progressing</td>
-									<td>Waiting for pay</td>
-									<td>
-										<button>View ---</button>
+									<td className={classes.deliveryStatus}>
+										Waiting for progressing
+									</td>
+									<td className={classes.paymentStatus}>Waiting for pay</td>
+									<td className={classes.actions}>
+										<button
+											className={classes.btn}
+											type='button'
+											onClick={() => goToDetailOrder(order._id)}
+										>
+											View &rarr;
+										</button>
 									</td>
 								</tr>
 							);
 						})}
-				</tbody>
+					</tbody>
+				)}
 			</table>
+			{loading && <p className={classes.loading}>Loading...</p>}
 		</div>
 	);
 };
