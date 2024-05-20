@@ -40,7 +40,7 @@ const HistoryContent = () => {
 						<th>DETAIL</th>
 					</tr>
 				</thead>
-				{!loading && !error && (
+				{!loading && !error && orders?.length > 0 && (
 					<tbody>
 						{orders?.map((order) => {
 							return (
@@ -78,6 +78,9 @@ const HistoryContent = () => {
 					</tbody>
 				)}
 			</table>
+			{!loading && !error && orders?.length <= 0 && (
+				<p className={classes.loading}>No orders found.</p>
+			)}
 			{loading && <p className={classes.loading}>Loading...</p>}
 		</div>
 	);
