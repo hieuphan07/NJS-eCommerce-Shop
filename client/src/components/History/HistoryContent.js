@@ -69,7 +69,7 @@ const HistoryContent = () => {
 											type='button'
 											onClick={() => goToDetailOrder(order._id)}
 										>
-											View &rarr;
+											View <b>&rarr;</b>
 										</button>
 									</td>
 								</tr>

@@ -20,6 +20,7 @@ const Checkout = lazy(() => import('./pages/Checkout'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const History = lazy(() => import('./pages/History'));
+const OrderInformation = lazy(() => import('./pages/OrderInformation'));
 
 const router = createBrowserRouter([
 	{
@@ -112,15 +113,32 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'history/:userId',
-				element: (
-					<Suspense
-						fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}
-					>
-						<RouteProtect>
-							<History />
-						</RouteProtect>
-					</Suspense>
-				),
+				children: [
+					{
+						index: true,
+						element: (
+							<Suspense
+								fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}
+							>
+								<RouteProtect>
+									<History />
+								</RouteProtect>
+							</Suspense>
+						),
+					},
+					{
+						path: ':orderId',
+						element: (
+							<Suspense
+								fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}
+							>
+								<RouteProtect>
+									<OrderInformation />
+								</RouteProtect>
+							</Suspense>
+						),
+					},
+				],
 			},
 		],
 	},

@@ -97,10 +97,39 @@ exports.getOrderedProducts = async (req, res, next) => {
 exports.getOrders = async (req, res, next) => {
 	// const userId = req.session.user._id;
 	const reqUserId = req.params.userId;
-	const orderByUser = await Order.find({ userId: reqUserId });
-	if (orderByUser) {
-		return res.status(200).json(orderByUser);
+	try {
+		const orderByUser = await Order.find({ userId: reqUserId });
+		if (orderByUser) {
+			return res.status(200).json(orderByUser);
+		}
+	} catch (err) {
+		console.log(err);
+		return next(err);
 	}
 };
 
-exports.getOrder = async (req, res, next) => {};
+exports.getOrder = async (req, res, next) => {
+	const userId = req.params.userId;
+	const orderId = req.params.orderId;
+	try {
+		const orders = await Order.find({ userId: userId }).populate({
+			path: 'items',
+			populate: { path: 'productId' },
+		});
+		if (!orders) {
+			return res.status(500).json({ error: { message: 'No orders found.' } });
+		}
+
+		const order = orders.find(
+			(order) => order._id.toString() === orderId.toString()
+		);
+		if (!order) {
+			return res.status(500).json({ error: { message: 'No orders found.' } });
+		}
+
+		res.status(200).json(order);
+	} catch (err) {
+		console.log(err);
+		return next(err);
+	}
+};
