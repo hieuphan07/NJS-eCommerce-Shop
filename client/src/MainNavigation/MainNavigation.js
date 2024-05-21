@@ -34,7 +34,7 @@ const NavBar = () => {
 	);
 
 	useEffect(() => {
-		async function fetcher() {
+		const fetcher = async () => {
 			try {
 				const response = await fetch('http://localhost:5500/auth/login', {
 					credentials: 'include',
@@ -52,8 +52,7 @@ const NavBar = () => {
 			} catch (err) {
 				console.log(err);
 			}
-		}
-
+		};
 		fetcher();
 	}, []);
 

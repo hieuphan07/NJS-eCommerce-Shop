@@ -16,7 +16,7 @@ const useFetch = (url, method, body) => {
 		  }
 		: { credentials: 'include' };
 
-	async function fetchHandler() {
+	const fetchHandler = async () => {
 		try {
 			setLoading(true);
 			const response = await fetch(url, fetcherConfig);
@@ -35,7 +35,7 @@ const useFetch = (url, method, body) => {
 		} catch (err) {
 			console.log(err);
 		}
-	}
+	};
 
 	return { loading, result: result, error: error, fetchHandler: fetchHandler };
 };
