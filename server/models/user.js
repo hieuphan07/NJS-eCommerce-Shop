@@ -14,10 +14,17 @@ const userSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	phone: Number,
+	phone: {
+		type: Number,
+		required: true,
+	},
 	isAdmin: {
 		type: Boolean,
 		default: false,
+	},
+	role: {
+		type: String,
+		default: 'client',
 	},
 });
 
