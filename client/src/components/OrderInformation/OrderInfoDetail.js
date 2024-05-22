@@ -19,23 +19,32 @@ const OrderInfoDetail = () => {
 
 	return (
 		<div className={classes.orderInfo}>
-			<h1>INFORMATION ORDER</h1>
-			<p>ID User:</p>
-			<p>Full Name:</p>
-			<p>Phone:</p>
-			<p>Address:</p>
-			<p>Total:</p>
-			<table>
-				<thead>
-					<tr>
-						<th>ID PRODUCT</th>
-						<th>IMAGE</th>
-						<th>NAME</th>
-						<th>PRICE</th>
-						<th>COUNT</th>
-					</tr>
-				</thead>
-				{!loading && !error && order && (
+			<h1 className={classes['orderInfo--title']}>INFORMATION ORDER</h1>
+			{loading && <p style={{ textAlign: 'center' }}>Loading...</p>}
+			{!loading && !error && order && (
+				<div className={classes['orderInfo--contact']}>
+					<p>ID User: {order.userId}</p>
+					<p>Full Name: {order.contact.fullname}</p>
+					<p>Phone: +84{order.contact.phoneNumber}</p>
+					<p>Address: {order.contact.address}</p>
+					<p>
+						Total:{' '}
+						{Number(order.total).toLocaleString('en', { useGrouping: true })}{' '}
+						VND
+					</p>
+				</div>
+			)}
+			{!loading && !error && order && (
+				<table className={classes['orderIndo--products']}>
+					<thead>
+						<tr>
+							<th>ID PRODUCT</th>
+							<th>IMAGE</th>
+							<th>NAME</th>
+							<th>PRICE</th>
+							<th>COUNT</th>
+						</tr>
+					</thead>
 					<tbody>
 						{order?.items.map((item) => {
 							return (
@@ -43,20 +52,24 @@ const OrderInfoDetail = () => {
 									<td>{item.productId._id}</td>
 									<td>
 										<img
-											style={{ width: '100px' }}
 											src={item.productId.photos[0]}
 											alt={item.productId.name}
 										/>
 									</td>
 									<td>{item.productId.name}</td>
-									<td>{item.productId.price}</td>
+									<td>
+										{Number(item.productId.price).toLocaleString('en', {
+											useGrouping: true,
+										})}{' '}
+										VND
+									</td>
 									<td>{item.quantity}</td>
 								</tr>
 							);
 						})}
 					</tbody>
-				)}
-			</table>
+				</table>
+			)}
 		</div>
 	);
 };
