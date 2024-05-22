@@ -12,6 +12,9 @@
 		font-style: italic;
 		color: var(--grey-light);
 		margin: 20px 0 0 50px;
+		p {
+			margin-top: 10px;
+		}
 	}
 
 	.orderIndo--products {
