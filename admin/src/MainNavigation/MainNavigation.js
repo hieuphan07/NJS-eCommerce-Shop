@@ -1,20 +1,41 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import './MainNavigation.css';
 
 const MainNavigation = () => {
 	return (
-		<div>
+		<div className='main-navigation'>
 			<ul>
 				<li>
-					<Link to='/'>Dashboard</Link>
+					<NavLink
+						className={({ isActive }) => {
+							return isActive ? 'active' : '';
+						}}
+						to='/'
+					>
+						Dashboard
+					</NavLink>
 				</li>
 				<li>
-					<Link to='/products'>Products</Link>
+					<NavLink
+						className={({ isActive }) => {
+							return isActive ? 'active' : '';
+						}}
+						to='/products'
+					>
+						Products
+					</NavLink>
 				</li>
 				<li>
-					<Link to='/chat'>Chat</Link>
+					<NavLink
+						className={({ isActive }) => {
+							return isActive ? 'active' : '';
+						}}
+						to='/create-product'
+					>
+						Add New Product
+					</NavLink>
 				</li>
 			</ul>
 		</div>

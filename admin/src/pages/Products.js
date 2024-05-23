@@ -1,9 +1,8 @@
 import React from 'react';
-
-import './Products.css';
+import List from '../components/List/List';
 
 const Products = () => {
-	return <div>Products</div>;
+	return <List />;
 };
 
 export default Products;

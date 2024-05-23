@@ -1,8 +1,8 @@
 import React from 'react';
-import Products from '../components/Products/Products';
+import Dashboard from '../components/Dashboard/Dashboard';
 
 const Home = () => {
-	return <Products />;
+	return <Dashboard />;
 };
 
 export default Home;
