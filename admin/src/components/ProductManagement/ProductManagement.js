@@ -7,6 +7,11 @@ const ProductManagement = () => {
 	const data = useActionData();
 	console.log(data);
 
+	// const [selectedFiles, setSelectedFiles] = useState([]);
+	// const selectFilesHandler = (event) => {
+	// 	setSelectedFiles(event.target.files);
+	// };
+
 	return (
 		<div className='product-form__container'>
 			<Form className='product-form' method='post'>
@@ -34,26 +39,34 @@ const ProductManagement = () => {
 					placeholder='Enter Price'
 					defaultValue='20000000'
 				/>
-				<label htmlFor='short-desc'>Short Description</label>
+				<label htmlFor='short_desc'>Short Description</label>
 				<textarea
 					rows={4}
-					id='short-desc'
-					name='short-desc'
+					id='short_desc'
+					name='short_desc'
 					type='string'
 					placeholder='Enter Short Description'
 					defaultValue='iPhone 15 128GB được trang bị màn hình Dynamic Island kích thước 6.1 inch với công nghệ hiển thị Super Retina XDR'
 				/>
-				<label htmlFor='long-desc'>Long Description</label>
+				<label htmlFor='long_desc'>Long Description</label>
 				<textarea
 					rows={7}
-					id='long-desc'
-					name='long-desc'
+					id='long_desc'
+					name='long_desc'
 					type='string'
 					placeholder='Enter Long Description'
 					defaultValue='iPhone 15 128GB được trang bị màn hình Dynamic Island kích thước 6.1 inch với công nghệ hiển thị Super Retina XDR'
 				/>
 				<label htmlFor='photos'>Upload image (5 images)</label>
-				<input id='photos' name='photos' type='file' multiple />
+				<input
+					id='photos'
+					name='photos'
+					type='file'
+					multiple
+					onChange={(e) => {
+						console.log(e.target.files);
+					}}
+				/>
 				<button>Submit</button>
 			</Form>
 		</div>
@@ -64,17 +77,18 @@ export default ProductManagement;
 
 export async function action({ request, params }) {
 	const formData = await request.formData();
-	const name = formData.get('name');
-	const category = formData.get('category');
-	const price = formData.get('price');
-	const shortDesc = formData.get('short-desc');
-	const longDesc = formData.get('long-desc');
+	const object = Object.fromEntries(formData);
+	console.log('object', object);
+
+	const photos = formData.get('photos');
+	console.log('photos', photos);
 	const product = {
-		name: name,
-		category: category,
-		price: Number(price),
-		short_desc: shortDesc,
-		long_desc: longDesc,
+		name: formData.get('name'),
+		category: formData.get('category'),
+		price: Number(formData.get('price')),
+		short_desc: formData.get('short_desc'),
+		long_desc: formData.get('long_desc'),
+		photos: formData.get('photos'),
 	};
 	return product;
 }
