@@ -5,8 +5,9 @@ import Products from './pages/Products';
 import AddProduct from './pages/AddProduct';
 import EditProduct from './pages/EditProduct';
 
-import { loader as productLoader } from './components/List/List';
+import { loader as productsLoader } from './components/List/List';
 import { action as manipulateProduct } from './components/ProductManagement/ProductManagement';
+import { loader as productLoader } from './components/ProductManagement/ProductManagement';
 
 const router = createBrowserRouter([
 	{
@@ -20,15 +21,17 @@ const router = createBrowserRouter([
 			{
 				path: 'products',
 				id: 'products',
-				loader: productLoader,
+				loader: productsLoader,
 				children: [
 					{
 						index: true,
 						element: <Products />,
 					},
 					{
-						path: ':productId',
+						path: 'edit/:productId',
 						element: <EditProduct />,
+						loader: productLoader,
+						action: manipulateProduct,
 					},
 				],
 			},

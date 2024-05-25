@@ -1,10 +1,12 @@
 import React from 'react';
-import { useRouteLoaderData } from 'react-router-dom';
+import { useRouteLoaderData, useNavigate } from 'react-router-dom';
 
 import './List.css';
 
 const List = () => {
 	const products = useRouteLoaderData('products');
+	const navigate = useNavigate();
+
 	return (
 		<div className='products-container'>
 			<h1 className='product-title'>Products</h1>
@@ -35,7 +37,11 @@ const List = () => {
 									</td>
 									<td className='productCategory'>{product.category}</td>
 									<td className='productActions'>
-										<button className='btn--update' button='button'>
+										<button
+											className='btn--update'
+											button='button'
+											onClick={() => navigate(`/products/edit/${product._id}`)}
+										>
 											Update
 										</button>
 										<button className='btn--delete' button='button'>

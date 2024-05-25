@@ -1,27 +1,25 @@
 import React from 'react';
-import { Form, useActionData } from 'react-router-dom';
+import { Form, useLoaderData, useParams } from 'react-router-dom';
 
 import './ProductManagement.css';
 
 const ProductManagement = () => {
-	const data = useActionData();
-	console.log(data);
-
-	// const [selectedFiles, setSelectedFiles] = useState([]);
-	// const selectFilesHandler = (event) => {
-	// 	setSelectedFiles(event.target.files);
-	// };
-
+	const product = useLoaderData();
+	const { productId } = useParams();
 	return (
 		<div className='product-form__container'>
-			<Form className='product-form' method='post'>
+			<Form
+				className='product-form'
+				method={productId ? 'patch' : 'post'}
+				encType='multipart/form-data'
+			>
 				<label htmlFor='name'>Product Name</label>
 				<input
 					id='name'
 					name='name'
 					type='string'
 					placeholder='Enter Product Name'
-					defaultValue='iPhone 15'
+					defaultValue={product?.name ?? ''}
 				/>
 				<label htmlFor='category'>Category</label>
 				<input
@@ -29,7 +27,7 @@ const ProductManagement = () => {
 					name='category'
 					type='string'
 					placeholder='Enter Category'
-					defaultValue='iphone'
+					defaultValue={product?.category ?? ''}
 				/>
 				<label htmlFor='price'>Price</label>
 				<input
@@ -37,7 +35,7 @@ const ProductManagement = () => {
 					name='price'
 					type='number'
 					placeholder='Enter Price'
-					defaultValue='20000000'
+					defaultValue={product?.price ?? ''}
 				/>
 				<label htmlFor='short_desc'>Short Description</label>
 				<textarea
@@ -46,27 +44,19 @@ const ProductManagement = () => {
 					name='short_desc'
 					type='string'
 					placeholder='Enter Short Description'
-					defaultValue='iPhone 15 128GB được trang bị màn hình Dynamic Island kích thước 6.1 inch với công nghệ hiển thị Super Retina XDR'
+					defaultValue={product?.['short_desc'] ?? ''}
 				/>
 				<label htmlFor='long_desc'>Long Description</label>
 				<textarea
-					rows={7}
+					rows={20}
 					id='long_desc'
 					name='long_desc'
 					type='string'
 					placeholder='Enter Long Description'
-					defaultValue='iPhone 15 128GB được trang bị màn hình Dynamic Island kích thước 6.1 inch với công nghệ hiển thị Super Retina XDR'
+					defaultValue={product?.['long_desc'] ?? ''}
 				/>
 				<label htmlFor='photos'>Upload image (5 images)</label>
-				<input
-					id='photos'
-					name='photos'
-					type='file'
-					multiple
-					onChange={(e) => {
-						console.log(e.target.files);
-					}}
-				/>
+				<input id='photos' name='photos' type='file' multiple />
 				<button>Submit</button>
 			</Form>
 		</div>
@@ -76,19 +66,30 @@ const ProductManagement = () => {
 export default ProductManagement;
 
 export async function action({ request, params }) {
+	const { productId } = params;
 	const formData = await request.formData();
-	const object = Object.fromEntries(formData);
-	console.log('object', object);
-
-	const photos = formData.get('photos');
-	console.log('photos', photos);
+	const photoFiles = formData.getAll('photos');
+	const urlPhotos = photoFiles.map((curr) => curr.name);
 	const product = {
 		name: formData.get('name'),
 		category: formData.get('category'),
 		price: Number(formData.get('price')),
 		short_desc: formData.get('short_desc'),
 		long_desc: formData.get('long_desc'),
-		photos: formData.get('photos'),
+		photos: urlPhotos,
 	};
+
+	const ADD_PRODUCT_URL = 'http://localhost:5500/products/create-product';
+	const EDIT_PRODUCT_URL = `http://localhost:5500/products/${productId}/edit`;
+
 	return product;
+}
+
+export async function loader({ request, params }) {
+	const { productId } = params;
+	const response = await fetch(`http://localhost:5500/products/${productId}`);
+	if (!response.ok) {
+		return console.log('Something went wrong!');
+	}
+	return response;
 }
