@@ -8,6 +8,7 @@ const ProductManagement = () => {
 	const { productId } = useParams();
 	return (
 		<div className='product-form__container'>
+			<h1>{productId ? 'EDIT PRODUCT' : 'ADD NEW PRODUCT'}</h1>
 			<Form
 				className='product-form'
 				method={productId ? 'patch' : 'post'}
