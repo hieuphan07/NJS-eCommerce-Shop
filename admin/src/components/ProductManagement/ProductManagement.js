@@ -1,5 +1,11 @@
 import React from 'react';
-import { Form, redirect, useLoaderData, useParams } from 'react-router-dom';
+import {
+	Form,
+	redirect,
+	useLoaderData,
+	useParams,
+	json,
+} from 'react-router-dom';
 
 import './ProductManagement.css';
 
@@ -95,17 +101,17 @@ export async function action({ request, params }) {
 		}
 	);
 	if (!response.ok) {
-		return console.log('Something went wrong');
+		throw json({ message: 'Something went wrong' }, { status: 404 });
 	}
 
-	return redirect('/products');
+	return response;
 }
 
 export async function loader({ request, params }) {
 	const { productId } = params;
 	const response = await fetch(`http://localhost:5500/products/${productId}`);
 	if (!response.ok) {
-		return console.log('Something went wrong!');
+		throw json({ message: 'Not found!' }, { status: 404 });
 	}
 	return response;
 }

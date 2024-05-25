@@ -1,0 +1,8 @@
+.error-container {
+	max-width: 1440px;
+	margin: 0 auto;
+
+	.error-message {
+		text-align: center;
+	}
+}
