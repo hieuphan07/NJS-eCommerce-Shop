@@ -27,6 +27,10 @@ exports.getProduct = async (req, res, next) => {
 	}
 };
 
+exports.createProduct = async (req, res, next) => {};
+
+exports.updateProduct = async (req, res, next) => {};
+
 exports.postOrder = async (req, res, next) => {
 	const order = req.body;
 	const parsedItems = order.items.map((item) => {

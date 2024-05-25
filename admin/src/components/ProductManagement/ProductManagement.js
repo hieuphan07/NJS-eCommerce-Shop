@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, useLoaderData, useParams } from 'react-router-dom';
+import { Form, redirect, useLoaderData, useParams } from 'react-router-dom';
 
 import './ProductManagement.css';
 
@@ -53,7 +53,7 @@ const ProductManagement = () => {
 					name='long_desc'
 					type='string'
 					placeholder='Enter Long Description'
-					defaultValue={product?.['long_desc'] ?? ''}
+					defaultValue={product?.['long_desc'] ?? '\n• \n• \n• '}
 				/>
 				<label htmlFor='photos'>Upload image (5 images)</label>
 				<input id='photos' name='photos' type='file' multiple />
@@ -81,8 +81,23 @@ export async function action({ request, params }) {
 
 	const ADD_PRODUCT_URL = 'http://localhost:5500/products/create-product';
 	const EDIT_PRODUCT_URL = `http://localhost:5500/products/${productId}/edit`;
+	const { method } = request;
+	const response = await fetch(
+		method === 'POST' ? ADD_PRODUCT_URL : EDIT_PRODUCT_URL,
+		{
+			method: method,
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			credentials: 'include',
+			body: JSON.stringify(product),
+		}
+	);
+	if (!response.ok) {
+		return console.log('Something went wrong');
+	}
 
-	return product;
+	return redirect('/products');
 }
 
 export async function loader({ request, params }) {
