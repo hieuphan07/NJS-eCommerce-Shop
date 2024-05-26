@@ -2,9 +2,18 @@
 	ul {
 		list-style: none;
 		display: flex;
-		gap: 20px;
+		align-items: center;
+		justify-content: space-between;
 		background: #f4f5f9;
 		padding: 10px;
+	}
+
+	.main-pages,
+	.auth-pages {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 20px;
 	}
 
 	li {
@@ -15,6 +24,13 @@
 
 		.active {
 			color: #ffd52f;
+		}
+
+		button {
+			border: none;
+			background-color: transparent;
+			font-size: inherit;
+			font-style: italic;
 		}
 	}
 }
