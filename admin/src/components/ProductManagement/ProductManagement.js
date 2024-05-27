@@ -29,6 +29,7 @@ const ProductManagement = () => {
 					type='string'
 					placeholder='Enter Product Name'
 					defaultValue={product?.name ?? ''}
+					required
 				/>
 				<label htmlFor='category'>Category</label>
 				<input
@@ -37,6 +38,7 @@ const ProductManagement = () => {
 					type='string'
 					placeholder='Enter Category'
 					defaultValue={product?.category ?? ''}
+					required
 				/>
 				<label htmlFor='price'>Price</label>
 				<input
@@ -45,6 +47,7 @@ const ProductManagement = () => {
 					type='number'
 					placeholder='Enter Price'
 					defaultValue={product?.price ?? ''}
+					required
 				/>
 				<label htmlFor='short_desc'>Short Description</label>
 				<textarea
@@ -54,6 +57,7 @@ const ProductManagement = () => {
 					type='string'
 					placeholder='Enter Short Description'
 					defaultValue={product?.['short_desc'] ?? ''}
+					required
 				/>
 				<label htmlFor='long_desc'>Long Description</label>
 				<textarea
@@ -62,14 +66,22 @@ const ProductManagement = () => {
 					name='long_desc'
 					type='string'
 					placeholder='Enter Long Description'
-					defaultValue={product?.['long_desc'] ?? '\n• \n• \n• '}
+					defaultValue={
+						product?.['long_desc'] ?? 'Tính năng nổi bật \n\n• \n• \n• '
+					}
+					required
 				/>
 				<label htmlFor='photos'>Upload image (5 images)</label>
 				{!product?.photos && (
 					<input id='photos' name='images' type='file' multiple />
 				)}
 				{product?.photos?.length > 0 && (
-					<input id='photos' name='photos' defaultValue={product?.photos} />
+					<input
+						id='photos'
+						name='photos'
+						defaultValue={product?.photos}
+						required
+					/>
 				)}
 				<div className='btn-actions'>
 					<button type='submit' className='btn-actions__submit'>
@@ -102,7 +114,7 @@ export async function action({ request, params }) {
 	const photos = formData.get('photos');
 
 	const urlImages = imageFiles.map((curr) => curr.name);
-	const urlPhotos = photos.split(',');
+	const urlPhotos = photos?.split(',');
 
 	const product = {
 		name: formData.get('name'),

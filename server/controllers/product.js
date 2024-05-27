@@ -39,8 +39,7 @@ exports.createProduct = async (req, res, next) => {
 			short_desc: product['short_desc'],
 			photos: product.photos,
 		};
-		const newProduct = await Product.create(reqProduct);
-		console(newProduct);
+		await Product.create(reqProduct);
 		return res.status(201).json({ message: 'New product created!' });
 	} catch (err) {
 		console.log(err);
