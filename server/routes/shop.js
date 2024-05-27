@@ -11,10 +11,10 @@ router.get('/products', productController.getProducts);
 router.get('/products/:productId', productController.getProduct);
 
 // create product
-router.post('products/create-product', productController.createProduct);
+router.post('/products/create-product', productController.createProduct);
 
 // update product
-router.patch('products/:productId/edit', productController.updateProduct);
+router.patch('/products/:productId/edit', productController.updateProduct);
 
 // create new order
 router.post('/create-order', isAuth, productController.postOrder);

@@ -1,10 +1,11 @@
 import React from 'react';
 import {
 	Form,
-	redirect,
 	useLoaderData,
 	useParams,
 	json,
+	redirect,
+	useNavigate,
 } from 'react-router-dom';
 
 import './ProductManagement.css';
@@ -12,9 +13,10 @@ import './ProductManagement.css';
 const ProductManagement = () => {
 	const product = useLoaderData();
 	const { productId } = useParams();
+	const navigate = useNavigate();
 	return (
 		<div className='product-form__container'>
-			<h1>{productId ? 'EDIT PRODUCT' : 'ADD NEW PRODUCT'}</h1>
+			<h2>{productId ? 'EDIT PRODUCT' : 'ADD NEW PRODUCT'}</h2>
 			<Form
 				className='product-form'
 				method={productId ? 'patch' : 'post'}
@@ -63,8 +65,24 @@ const ProductManagement = () => {
 					defaultValue={product?.['long_desc'] ?? '\n• \n• \n• '}
 				/>
 				<label htmlFor='photos'>Upload image (5 images)</label>
-				<input id='photos' name='photos' type='file' multiple />
-				<button>Submit</button>
+				{!product?.photos && (
+					<input id='photos' name='images' type='file' multiple />
+				)}
+				{product?.photos?.length > 0 && (
+					<input id='photos' name='photos' defaultValue={product?.photos} />
+				)}
+				<div className='btn-actions'>
+					<button type='submit' className='btn-actions__submit'>
+						Submit
+					</button>
+					<button
+						type='button'
+						className='btn-actions__cancel'
+						onClick={() => navigate('/products')}
+					>
+						Cancel
+					</button>
+				</div>
 			</Form>
 		</div>
 	);
@@ -74,21 +92,27 @@ export default ProductManagement;
 
 export async function action({ request, params }) {
 	const { productId } = params;
+	const { method } = request;
+
+	const ADD_PRODUCT_URL = 'http://localhost:5500/products/create-product';
+	const EDIT_PRODUCT_URL = `http://localhost:5500/products/${productId}/edit`;
+
 	const formData = await request.formData();
-	const photoFiles = formData.getAll('photos');
-	const urlPhotos = photoFiles.map((curr) => curr.name);
+	const imageFiles = formData.getAll('images');
+	const photos = formData.get('photos');
+
+	const urlImages = imageFiles.map((curr) => curr.name);
+	const urlPhotos = photos.split(',');
+
 	const product = {
 		name: formData.get('name'),
 		category: formData.get('category'),
 		price: Number(formData.get('price')),
 		short_desc: formData.get('short_desc'),
 		long_desc: formData.get('long_desc'),
-		photos: urlPhotos,
+		photos: method === 'POST' ? urlImages : urlPhotos,
 	};
 
-	const ADD_PRODUCT_URL = 'http://localhost:5500/products/create-product';
-	const EDIT_PRODUCT_URL = `http://localhost:5500/products/${productId}/edit`;
-	const { method } = request;
 	const response = await fetch(
 		method === 'POST' ? ADD_PRODUCT_URL : EDIT_PRODUCT_URL,
 		{
@@ -96,15 +120,15 @@ export async function action({ request, params }) {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			credentials: 'include',
 			body: JSON.stringify(product),
+			credentials: 'include',
 		}
 	);
 	if (!response.ok) {
-		throw json({ message: 'Something went wrong' }, { status: 404 });
+		throw json({ message: 'Failed to add/update product' }, { status: 404 });
 	}
 
-	return response;
+	return redirect('/products');
 }
 
 export async function loader({ request, params }) {

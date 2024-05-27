@@ -27,9 +27,42 @@ exports.getProduct = async (req, res, next) => {
 	}
 };
 
-exports.createProduct = async (req, res, next) => {};
+exports.createProduct = async (req, res, next) => {
+	try {
+		const product = req.body;
+		console.log(product);
+		const reqProduct = {
+			name: product.name,
+			price: Number(product.price),
+			category: product.category,
+			long_desc: product['long_desc'],
+			short_desc: product['short_desc'],
+			photos: product.photos,
+		};
+		const newProduct = await Product.create(reqProduct);
+		console(newProduct);
+		return res.status(201).json({ message: 'New product created!' });
+	} catch (err) {
+		console.log(err);
+		next(err);
+	}
+};
 
-exports.updateProduct = async (req, res, next) => {};
+exports.updateProduct = async (req, res, next) => {
+	try {
+		const { productId } = req.params;
+		const updatingProduct = req.body;
+		const updatedProduct = await Product.findByIdAndUpdate(
+			productId,
+			updatingProduct,
+			{ new: true }
+		);
+		return res.status(200).json(updatedProduct);
+	} catch (err) {
+		console.log(err);
+		next(err);
+	}
+};
 
 exports.postOrder = async (req, res, next) => {
 	const order = req.body;
