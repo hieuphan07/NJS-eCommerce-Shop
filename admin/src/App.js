@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 import RootLayout from './pages/RootLayout/Root';
 import Error from './pages/Error';
 import Home from './pages/Home';
@@ -15,6 +16,7 @@ import {
 	loader as loginLoader,
 	action as logoutAction,
 } from './MainNavigation/MainNavigation';
+import { loader as ordersLoader } from './pages/Home';
 
 const router = createBrowserRouter([
 	{
@@ -27,7 +29,12 @@ const router = createBrowserRouter([
 		children: [
 			{
 				index: true,
-				element: <Home />,
+				element: (
+					<ProtectedRoute>
+						<Home />
+					</ProtectedRoute>
+				),
+				loader: ordersLoader,
 			},
 			{
 				path: 'auth/login',

@@ -88,6 +88,18 @@ exports.postOrder = async (req, res, next) => {
 	}
 };
 
+exports.getAllOrders = async (req, res, next) => {
+	try {
+		const orders = await Order.find();
+		if (orders && orders.length > 0) {
+			return res.status(200).json(orders);
+		}
+	} catch (err) {
+		console.log(err);
+		next(err);
+	}
+};
+
 exports.getOrders = async (req, res, next) => {
 	// const userId = req.session.user._id;
 	const reqUserId = req.params.userId;

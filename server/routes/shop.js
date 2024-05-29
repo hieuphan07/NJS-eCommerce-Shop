@@ -19,6 +19,9 @@ router.patch('/products/:productId/edit', productController.updateProduct);
 // create new order
 router.post('/create-order', isAuth, productController.postOrder);
 
+// get all orders
+router.get('/orders', productController.getAllOrders);
+
 // get orders by user
 router.get('/orders/:userId', isAuth, productController.getOrders);
 
