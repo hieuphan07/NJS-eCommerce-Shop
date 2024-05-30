@@ -28,6 +28,7 @@ const Dashboard = () => {
 				/>
 				<Widget
 					number='44.779.000'
+					sup='VND'
 					infoOfNumber='Earning of Months'
 					icon='fa-solid fa-dollar-sign'
 				/>
@@ -52,24 +53,26 @@ const Dashboard = () => {
 							<th>Detail</th>
 						</tr>
 					</thead>
-					{orders &&
-						orders?.length > 0 &&
-						orders.map((order) => {
-							return (
-								<tr key={order._id}>
-									<td>{order.userId}</td>
-									<td>{order.contact?.fullname}</td>
-									<td>{order.contact?.phoneNumber}</td>
-									<td>{order.contact?.address}</td>
-									<td>{order.total}</td>
-									<td>Chưa vận chuyển</td>
-									<td>Chưa thanh toán</td>
-									<td>
-										<buton type='button'>View</buton>
-									</td>
-								</tr>
-							);
-						})}
+					{orders && orders?.length > 0 && (
+						<tbody>
+							{orders.map((order) => {
+								return (
+									<tr key={order._id}>
+										<td>{order.userId}</td>
+										<td>{order.contact?.fullname}</td>
+										<td>{order.contact?.phoneNumber}</td>
+										<td>{order.contact?.address}</td>
+										<td>{order.total}</td>
+										<td>Chưa vận chuyển</td>
+										<td>Chưa thanh toán</td>
+										<td>
+											<button type='button'>View</button>
+										</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					)}
 				</table>
 			</div>
 		</div>

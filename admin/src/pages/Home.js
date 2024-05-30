@@ -9,7 +9,9 @@ const Home = () => {
 export default Home;
 
 export async function loader() {
-	const response = await fetch('http://localhost:5500/orders');
+	const response = await fetch('http://localhost:5500/orders', {
+		credentials: 'include',
+	});
 	if (!response.ok) {
 		throw json(
 			{ message: 'Failed to fetch orders or not authenticated by admin' },

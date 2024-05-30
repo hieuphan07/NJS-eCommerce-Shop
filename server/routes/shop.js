@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const productController = require('../controllers/product');
-const { isAuth } = require('../middleware/auth');
+const { isAuth, isAdmin } = require('../middleware/auth');
 
 // get ALL products
 router.get('/products', productController.getProducts);
@@ -20,7 +20,7 @@ router.patch('/products/:productId/edit', productController.updateProduct);
 router.post('/create-order', isAuth, productController.postOrder);
 
 // get all orders
-router.get('/orders', productController.getAllOrders);
+router.get('/orders', isAdmin, productController.getAllOrders);
 
 // get orders by user
 router.get('/orders/:userId', isAuth, productController.getOrders);
