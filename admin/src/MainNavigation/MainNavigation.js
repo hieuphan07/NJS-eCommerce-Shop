@@ -11,6 +11,7 @@ import './MainNavigation.css';
 
 const MainNavigation = () => {
 	const data = useRouteLoaderData('root');
+	
 	return (
 		<div className='main-navigation'>
 			<ul>
