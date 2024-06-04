@@ -1,30 +1,22 @@
-import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
-import Error from './pages/Error';
 import RootLayout from './pages/RootLayout/Root';
-// import Home from './pages/Home';
-// import Products from './pages/Products';
-// import AddProduct from './pages/AddProduct';
-// import EditProduct from './pages/EditProduct';
-// import Login from './pages/Login';
+import Error from './pages/Error';
+import Home from './pages/Home';
+import Products from './pages/Products';
+import AddProduct from './pages/AddProduct';
+import EditProduct from './pages/EditProduct';
+import Login from './pages/Login';
 
-// import { loader as ordersLoader } from './pages/Home';
-// import { loader as productsLoader } from './components/List/List';
-// import { loader as productLoader } from './components/ProductManagement/ProductManagement';
+import { loader as productsLoader } from './components/List/List';
+import { action as manipulateProduct } from './components/ProductManagement/ProductManagement';
+import { loader as productLoader } from './components/ProductManagement/ProductManagement';
+import { action as loginAction } from './components/Login/LoginContent';
 import {
 	loader as loginLoader,
 	action as logoutAction,
 } from './MainNavigation/MainNavigation';
-import { action as manipulateProduct } from './components/ProductManagement/ProductManagement';
-import { action as loginAction } from './components/Login/LoginContent';
-
-// Add lazy loading page
-const Home = lazy(() => import('./pages/Home'));
-const Products = lazy(() => import('./pages/Products'));
-const AddProduct = lazy(() => import('./pages/AddProduct'));
-const EditProduct = lazy(() => import('./pages/EditProduct'));
-const Login = lazy(() => import('./pages/Login'));
+import { loader as ordersLoader } from './pages/Home';
 
 const router = createBrowserRouter([
 	{
@@ -38,69 +30,37 @@ const router = createBrowserRouter([
 			{
 				index: true,
 				element: (
-					<Suspense
-						fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}
-					>
-						<ProtectedRoute>
-							<Home />
-						</ProtectedRoute>
-					</Suspense>
+					<ProtectedRoute>
+						<Home />
+					</ProtectedRoute>
 				),
-				loader: () => import('./pages/Home').then((module) => module.loader()),
+				loader: ordersLoader,
 			},
 			{
 				path: 'auth/login',
-				element: (
-					<Suspense
-						fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}
-					>
-						<Login />
-					</Suspense>
-				),
+				element: <Login />,
 				action: loginAction,
 			},
 			{
 				path: 'products',
 				id: 'products',
-				loader: () =>
-					import('./components/List/List').then((module) => module.loader()),
+				loader: productsLoader,
 				children: [
 					{
 						index: true,
-						element: (
-							<Suspense
-								fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}
-							>
-								<Products />
-							</Suspense>
-						),
+						element: <Products />,
 					},
 					{
 						path: 'edit/:productId',
-						element: (
-							<Suspense
-								fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}
-							>
-								<EditProduct />
-							</Suspense>
-						),
-						loader: () =>
-							import('./components/ProductManagement/ProductManagement').then(
-								(module) => module.loader()
-							),
+						element: <EditProduct />,
+						loader: productLoader,
 						action: manipulateProduct,
 					},
 				],
 			},
 			{
 				path: 'create-product',
-				element: (
-					<Suspense
-						fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}
-					>
-						<AddProduct />
-					</Suspense>
-				),
+				element: <AddProduct />,
 				action: manipulateProduct,
 			},
 		],
