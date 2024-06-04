@@ -27,12 +27,7 @@ const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 
 // use 3rd-party
-app.use(
-	cors({
-		origin: ['http://localhost:3000', 'http://localhost:3001'],
-		credentials: true,
-	})
-);
+app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3001'], credentials: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -61,6 +56,4 @@ mongoose
 			if (!err) console.log(`Server running on port ${process.env.PORT}`);
 		});
 	})
-	.catch((err) => {
-		console.log(err);
-	});
+	.catch((err) => console.log(err));

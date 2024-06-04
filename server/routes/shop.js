@@ -14,14 +14,7 @@ router.get('/products/:productId', productController.getProduct);
 router.post('/products/create-product', productController.createProduct);
 
 // update product
-router.patch(
-	'/products/:productId/edit',
-	isAdmin,
-	productController.updateProduct
-);
-
-// delete product
-router.delete('/products/:productId', isAdmin, productController.deleteProduct);
+router.patch('/products/:productId/edit', productController.updateProduct);
 
 // create new order
 router.post('/create-order', isAuth, productController.postOrder);
