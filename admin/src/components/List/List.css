@@ -34,6 +34,9 @@
 		}
 
 		.productActions {
+			display: flex;
+			gap: 5px;
+
 			.btn--update,
 			.btn--delete {
 				padding: 7px;

@@ -47,6 +47,33 @@ exports.createProduct = async (req, res, next) => {
 	}
 };
 
+exports.deleteProduct = async (req, res, next) => {
+	const { productId } = req.params;
+	try {
+		const orders = await Order.find({}).populate({
+			path: 'items',
+			populate: { path: 'productId' },
+		});
+
+		// const ordersOfDeletingProduct = orders.find(
+		// 	(order) => order.productId.toString() === productId.toString()
+		// );
+		// for (const order of ordersOfDeletingProduct) {
+		// 	const updatedItems = order.items.filter(
+		// 		(item) => item.productId.toString() !== productId.toString()
+		// 	);
+		// 	order.items = updatedItems;
+		// 	await Order.findByIdAndUpdate(order._id, order);
+		// }
+
+		// await Product.findByIdAndDelete(productId);
+		return res.status(200).json(orders);
+	} catch (err) {
+		console.log(err);
+		next(err);
+	}
+};
+
 exports.updateProduct = async (req, res, next) => {
 	try {
 		const { productId } = req.params;

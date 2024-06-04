@@ -17,6 +17,7 @@ import {
 	action as logoutAction,
 } from './MainNavigation/MainNavigation';
 import { loader as ordersLoader } from './pages/Home';
+import { action as deleteProduct } from './components/List/List';
 
 const router = createBrowserRouter([
 	{
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
 				path: 'create-product',
 				element: <AddProduct />,
 				action: manipulateProduct,
+			},
+			{
+				path: 'delete/:productId',
+				action: deleteProduct,
 			},
 		],
 	},

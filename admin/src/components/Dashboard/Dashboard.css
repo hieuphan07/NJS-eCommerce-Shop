@@ -45,6 +45,18 @@
 			tr:nth-child(even) {
 				background-color: #f4f5f9;
 			}
+
+			tbody {
+				td {
+					button {
+						background-color: #6cea87;
+						color: white;
+						padding: 10px;
+						border: none;
+						border-radius: 3px;
+					}
+				}
+			}
 		}
 	}
 }

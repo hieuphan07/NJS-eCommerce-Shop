@@ -1,5 +1,11 @@
 import React from 'react';
-import { useRouteLoaderData, useNavigate } from 'react-router-dom';
+import {
+	useRouteLoaderData,
+	useNavigate,
+	json,
+	Form,
+	redirect,
+} from 'react-router-dom';
 
 import './List.css';
 
@@ -44,9 +50,11 @@ const List = () => {
 										>
 											Update
 										</button>
-										<button className='btn--delete' button='button'>
-											Delete
-										</button>
+										<Form method='delete' action={'/delete/' + product._id}>
+											<button className='btn--delete' button='submit'>
+												Delete
+											</button>
+										</Form>
 									</td>
 								</tr>
 							);
@@ -65,4 +73,31 @@ export async function loader() {
 	const response = await fetch('http://localhost:5500/products');
 	if (!response.ok) return console.log('Something went wrong');
 	return response;
+}
+
+// action delete product
+export async function action({ request, params }) {
+	try {
+		const { productId } = params;
+		const isConfirm = window.confirm('Are you sure?');
+		if (isConfirm) {
+			const response = await fetch(
+				`http://localhost:5500/products/${productId}`,
+				{
+					method: 'DELETE',
+					credentials: 'include',
+				}
+			);
+			if (!response.ok) {
+				throw json(
+					{ message: 'Something went wrong! Cannot delete this item' },
+					{ status: 500 }
+				);
+			}
+			return redirect('/products');
+		}
+		return redirect('/products');
+	} catch (err) {
+		console.log(err);
+	}
 }

@@ -54,7 +54,7 @@ const MainNavigation = () => {
 							}}
 							to='/auth/login'
 						>
-							{data.userInfo ? 'Welcome ' + data?.userInfo?.fullname : 'Login'}
+							{data?.userInfo ? 'Welcome ' + data?.userInfo?.fullname : 'Login'}
 						</NavLink>
 					</li>
 					{data.userInfo && (
