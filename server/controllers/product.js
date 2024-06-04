@@ -4,6 +4,7 @@ const Product = require('../models/product.js');
 const Order = require('../models/order.js');
 const { sendEmail } = require('../utils/sendEmail.js');
 
+// get all products
 exports.getProducts = async (req, res, next) => {
 	try {
 		const products = await Product.find();
@@ -13,6 +14,7 @@ exports.getProducts = async (req, res, next) => {
 	}
 };
 
+// get product by id
 exports.getProduct = async (req, res, next) => {
 	const productId = req.params.productId;
 	try {
@@ -27,6 +29,7 @@ exports.getProduct = async (req, res, next) => {
 	}
 };
 
+// create new product
 exports.createProduct = async (req, res, next) => {
 	try {
 		const product = req.body;
@@ -47,6 +50,7 @@ exports.createProduct = async (req, res, next) => {
 	}
 };
 
+// update product
 exports.updateProduct = async (req, res, next) => {
 	try {
 		const { productId } = req.params;
@@ -63,6 +67,19 @@ exports.updateProduct = async (req, res, next) => {
 	}
 };
 
+// delete product
+exports.deleteProduct = async (req, res, next) => {
+	const { productId } = req.params;
+	try {
+		await Product.findByIdAndDelete(productId);
+		return res.status(200).json({ message: 'Product deleted succcessfully!' });
+	} catch (err) {
+		console.log(err);
+		next(err);
+	}
+};
+
+// create new order
 exports.postOrder = async (req, res, next) => {
 	const order = req.body;
 	const parsedItems = order.items.map((item) => {
@@ -88,6 +105,7 @@ exports.postOrder = async (req, res, next) => {
 	}
 };
 
+// get all orders
 exports.getAllOrders = async (req, res, next) => {
 	try {
 		const orders = await Order.find();
@@ -100,6 +118,7 @@ exports.getAllOrders = async (req, res, next) => {
 	}
 };
 
+// get orders by user
 exports.getOrders = async (req, res, next) => {
 	// const userId = req.session.user._id;
 	const reqUserId = req.params.userId;
@@ -114,6 +133,7 @@ exports.getOrders = async (req, res, next) => {
 	}
 };
 
+// get specificed order
 exports.getOrder = async (req, res, next) => {
 	const userId = req.params.userId;
 	const orderId = req.params.orderId;

@@ -8,6 +8,7 @@ const Home = () => {
 
 export default Home;
 
+// login loader with "root" id
 export async function loader() {
 	const response = await fetch('http://localhost:5500/orders', {
 		credentials: 'include',
