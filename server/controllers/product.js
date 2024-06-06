@@ -30,7 +30,6 @@ exports.getProduct = async (req, res, next) => {
 exports.createProduct = async (req, res, next) => {
 	try {
 		const product = req.body;
-		console.log(product);
 		const reqProduct = {
 			name: product.name,
 			price: Number(product.price),
@@ -50,24 +49,19 @@ exports.createProduct = async (req, res, next) => {
 exports.deleteProduct = async (req, res, next) => {
 	const { productId } = req.params;
 	try {
-		const orders = await Order.find({}).populate({
-			path: 'items',
-			populate: { path: 'productId' },
-		});
-
-		// const ordersOfDeletingProduct = orders.find(
-		// 	(order) => order.productId.toString() === productId.toString()
-		// );
-		// for (const order of ordersOfDeletingProduct) {
-		// 	const updatedItems = order.items.filter(
-		// 		(item) => item.productId.toString() !== productId.toString()
-		// 	);
-		// 	order.items = updatedItems;
-		// 	await Order.findByIdAndUpdate(order._id, order);
-		// }
-
-		// await Product.findByIdAndDelete(productId);
-		return res.status(200).json(orders);
+		const orders = await Order.aggregate([
+			{
+				$match: { 'items.productId': new mongoose.Types.ObjectId(productId) },
+			},
+		]);
+		if (!orders) {
+			await Product.findByIdAndDelete(productId);
+			return res.status(200).json({ message: 'Product deleted.' });
+		} else {
+			return res
+				.status(200)
+				.json({ message: 'Can not deleted. This is item is ordering.' });
+		}
 	} catch (err) {
 		console.log(err);
 		next(err);
@@ -137,7 +131,7 @@ exports.getOrders = async (req, res, next) => {
 		}
 	} catch (err) {
 		console.log(err);
-		return next(err);
+		next(err);
 	}
 };
 
@@ -163,7 +157,7 @@ exports.getOrder = async (req, res, next) => {
 		res.status(200).json(order);
 	} catch (err) {
 		console.log(err);
-		return next(err);
+		next(err);
 	}
 };
 
