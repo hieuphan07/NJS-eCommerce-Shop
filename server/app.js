@@ -1,10 +1,7 @@
-const fs = require('fs');
 const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
-const helmet = require('helmet');
-const compression = require('compression');
-const morgan = require('morgan');
+const helmet = require('helmet')
 
 // 3rd-party
 const mongoose = require('mongoose');
@@ -30,14 +27,7 @@ app.set('views', 'views');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 
-const accessLogStream = fs.createWriteStream(
-	path.join(__dirname, 'access.log'),
-	{ flags: 'a' }
-);
-
-app.use(helmet());
-app.use(compression());
-app.use(morgan('combined', {stream: accessLogStream}));
+app.use(helmet())
 
 // use 3rd-party
 app.use(
