@@ -11,6 +11,8 @@ import './MainNavigation.css';
 
 const MainNavigation = () => {
 	const data = useRouteLoaderData('root');
+	console.log(data);
+
 	return (
 		<div className='main-navigation'>
 			<ul>
@@ -57,7 +59,7 @@ const MainNavigation = () => {
 							{data?.userInfo ? 'Welcome ' + data?.userInfo?.fullname : 'Login'}
 						</NavLink>
 					</li>
-					{data.userInfo && (
+					{data?.userInfo && (
 						<li>
 							<Form method='post'>
 								<button>Logout</button>
