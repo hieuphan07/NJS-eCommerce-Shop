@@ -88,6 +88,10 @@ export async function action({ request, params }) {
 					credentials: 'include',
 				}
 			);
+
+			// check response status
+			console.log()
+
 			if (!response.ok) {
 				throw json(
 					{ message: 'Something went wrong! Cannot delete this item' },
