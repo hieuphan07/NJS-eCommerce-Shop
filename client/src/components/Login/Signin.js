@@ -12,8 +12,9 @@ const Signin = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const loginedUser = useSelector((state) => state.user);
-	const LOGIN_URL = 'http://localhost:5500/auth/login';
-	const LOGOUT_URL = 'http://localhost:5500/auth/logout';
+	const url = useSelector((state) => state.url);
+	const LOGIN_URL = url + 'auth/login';
+	const LOGOUT_URL = url + 'auth/logout';
 	const user = {};
 
 	const {

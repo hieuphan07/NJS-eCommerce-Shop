@@ -12,9 +12,11 @@ const NavBar = () => {
 	const navigate = useNavigate();
 	const loginedUser = useSelector((state) => state.user);
 	const cartItems = useSelector((state) => state.cartItems);
+	const url = useSelector((state) => state.url);
 	const dispatch = useDispatch();
 
-	const LOGOUT_URL = 'http://localhost:5500/auth/logout';
+	const LOGOUT_URL = url + 'auth/logout';
+	const LOGIN_URL = url + 'auth/login';
 	const { fetchHandler: signoutHandler } = useFetch(LOGOUT_URL, 'POST');
 
 	const logoutHandler = () => {
@@ -36,7 +38,7 @@ const NavBar = () => {
 	useEffect(() => {
 		const fetcher = async () => {
 			try {
-				const response = await fetch('http://localhost:5500/auth/login', {
+				const response = await fetch(LOGIN_URL, {
 					credentials: 'include',
 				});
 				const resData = await response.json();

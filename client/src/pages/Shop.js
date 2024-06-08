@@ -9,8 +9,8 @@ const ShopPage = () => {
 export default ShopPage;
 
 // Fetch loader
-export async function loader() {
-	const response = await fetch('http://localhost:5500/products', {
+export async function loader(url) {
+	const response = await fetch(`${url}products`, {
 		credentials: 'include',
 	});
 

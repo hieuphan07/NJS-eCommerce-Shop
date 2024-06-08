@@ -44,8 +44,8 @@ const HomePage = () => {
 export default HomePage;
 
 // Fetch loader
-export async function loader() {
-	const PRODUCTS_URL = 'http://localhost:5500/products';
+export async function loader(url) {
+	const PRODUCTS_URL = url + 'products';
 	const response = await fetch(PRODUCTS_URL);
 
 	if (!response.ok) {

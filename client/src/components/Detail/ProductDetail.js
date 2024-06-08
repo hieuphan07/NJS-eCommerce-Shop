@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import useFetch from '../../hooks/useFetch';
 import { useParams, useNavigate, useLoaderData } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import BannerNavigation from '../Banner/BannerNavigation';
 
@@ -13,13 +13,14 @@ const formatter = new Intl.NumberFormat('de-DE', {
 });
 
 const ProductDetail = () => {
+	const url = useSelector((state) => state.url);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const allProduct = useLoaderData();
 	const inputRef = useRef();
 	const params = useParams();
 	const productId = params.productId;
-	const PRODUCT_URL = `http://localhost:5500/products/${productId}`;
+	const PRODUCT_URL = `${url}products/${productId}`;
 	let longDesc;
 	const {
 		loading,
