@@ -1,7 +1,8 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
-const helmet = require('helmet')
+const helmet = require('helmet');
+const compression = require('compression');
 
 // 3rd-party
 const mongoose = require('mongoose');
@@ -27,7 +28,8 @@ app.set('views', 'views');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 
-app.use(helmet())
+app.use(helmet());
+app.use(compression());
 
 // use 3rd-party
 app.use(
