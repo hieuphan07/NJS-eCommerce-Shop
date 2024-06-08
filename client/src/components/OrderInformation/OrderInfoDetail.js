@@ -3,15 +3,17 @@ import useFetch from '../../hooks/useFetch';
 import { useParams } from 'react-router-dom';
 
 import classes from './OrderInfoDetail.module.css';
+import { useSelector } from 'react-redux';
 
 const OrderInfoDetail = () => {
+	const url = useSelector((state) => state.url);
 	const { userId, orderId } = useParams();
 	const {
 		loading,
 		result: order,
 		error,
 		fetchHandler,
-	} = useFetch(`http://localhost:5500/orders/${userId}/${orderId}`);
+	} = useFetch(`${url}orders/${userId}/${orderId}`);
 
 	useEffect(() => {
 		fetchHandler();

@@ -16,7 +16,8 @@ const isEmail = (value) => value.includes('@');
 const isPhone = (value) => value.trim() !== '' && value.length >= 10;
 
 const CheckoutContent = () => {
-	const ORDER_URL = 'http://localhost:5500/create-order';
+	const url = useSelector((state) => state.url);
+	const ORDER_URL = `${url}create-order`;
 	const navigate = useNavigate();
 	const [isSubmit, setIsSubmit] = useState(false);
 	const [didSubmit, setDidSubmit] = useState(false);

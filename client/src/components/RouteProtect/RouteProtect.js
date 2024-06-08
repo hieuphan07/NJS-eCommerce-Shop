@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 const RouteProtect = ({ children }) => {
 	const url = useSelector((state) => state.url);
-	const LOGIN_URL = url + 'auth/login';
+	const LOGIN_URL = `${url}auth/login`;
 	const { loading, result: user, fetchHandler } = useFetch(LOGIN_URL);
 
 	useEffect(() => {

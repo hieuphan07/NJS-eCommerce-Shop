@@ -4,8 +4,10 @@ import useFetch from '../../hooks/useFetch';
 
 import BannerNaigation from '../../components/Banner/BannerNavigation';
 import classes from './HistoryContent.module.css';
+import { useSelector } from 'react-redux';
 
 const HistoryContent = () => {
+	const url = useSelector((state) => state.url);
 	const navigate = useNavigate();
 	const { userId } = useParams();
 	const {
@@ -13,7 +15,7 @@ const HistoryContent = () => {
 		result: orders,
 		error,
 		fetchHandler,
-	} = useFetch(`http://localhost:5500/orders/${userId}`);
+	} = useFetch(`${url}orders/${userId}`);
 
 	useEffect(() => {
 		fetchHandler();

@@ -1,6 +1,5 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import RootLayout from './pages/Root';
 import RouteProtect from './components/RouteProtect/RouteProtect';
@@ -22,7 +21,7 @@ const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const History = lazy(() => import('./pages/History'));
 const OrderInformation = lazy(() => import('./pages/OrderInformation'));
-const url = 'https://ecommerce-shop-5f0427530cdd.herokuapp.com/'; // Do not change this url
+const url = 'https://ecommerce-shop-5f0427530cdd.herokuapp.com/'; // Change url to "http://localhost:5500/" to use localhost
 
 const router = createBrowserRouter([
 	{

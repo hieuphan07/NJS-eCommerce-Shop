@@ -4,6 +4,7 @@ import useFetch from '../../hooks/useFetch';
 import { Link, useNavigate } from 'react-router-dom';
 
 import classes from './Signup.module.css';
+import { useSelector } from 'react-redux';
 
 const isNotEmpty = (value) => value.trim() !== '';
 const isEmail = (value) => value.includes('@');
@@ -13,7 +14,8 @@ const isPhone = (value) => value.trim() !== '' && value.length >= 10;
 
 const Signup = () => {
 	const navigate = useNavigate();
-	const SIGNUP_URL = 'http://localhost:5500/auth/signup';
+	const url = useSelector((state) => state.url);
+	const SIGNUP_URL = `${url}auth/signup`;
 	const user = {};
 
 	const {
