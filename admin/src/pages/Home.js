@@ -8,8 +8,8 @@ const Home = () => {
 
 export default Home;
 
-export async function loader() {
-	const response = await fetch('http://localhost:5500/orders', {
+export async function loader(url) {
+	const response = await fetch(`${url}orders`, {
 		credentials: 'include',
 	});
 	if (!response.ok) {

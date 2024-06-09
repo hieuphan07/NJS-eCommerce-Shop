@@ -34,7 +34,12 @@ app.use(compression());
 // use 3rd-party
 app.use(
 	cors({
-		origin: ['http://localhost:3000', 'http://localhost:3001'],
+		origin: [
+			'http://localhost:3000',
+			'http://localhost:3001',
+			'https://e-commerce-client-ayk7acnh1-hieus-projects-29fb3e46.vercel.app',
+			'https://e-commerce-admin-jade.vercel.app',
+		],
 		credentials: true,
 	})
 );

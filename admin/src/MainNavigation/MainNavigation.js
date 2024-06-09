@@ -11,7 +11,6 @@ import './MainNavigation.css';
 
 const MainNavigation = () => {
 	const data = useRouteLoaderData('root');
-	console.log(data);
 
 	return (
 		<div className='main-navigation'>
@@ -74,8 +73,8 @@ const MainNavigation = () => {
 
 export default MainNavigation;
 
-export async function loader() {
-	const response = await fetch('http://localhost:5500/auth/login', {
+export async function loader(url) {
+	const response = await fetch(`${url}auth/login`, {
 		credentials: 'include',
 	});
 	switch (response.status) {
@@ -89,8 +88,8 @@ export async function loader() {
 	}
 }
 
-export async function action() {
-	const response = await fetch('http://localhost:5500/auth/logout', {
+export async function action(url) {
+	const response = await fetch(`${url}auth/logout`, {
 		method: 'POST',
 		credentials: 'include',
 	});

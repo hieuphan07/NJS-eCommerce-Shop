@@ -19,13 +19,15 @@ import {
 import { loader as ordersLoader } from './pages/Home';
 import { action as deleteProduct } from './components/List/List';
 
+const url = 'https://ecommerce-shop-5f0427530cdd.herokuapp.com/';
+
 const router = createBrowserRouter([
 	{
 		path: '/',
 		errorElement: <Error />,
 		element: <RootLayout />,
-		loader: loginLoader,
-		action: logoutAction,
+		loader: () => loginLoader(url),
+		action: () => logoutAction(url),
 		id: 'root',
 		children: [
 			{
@@ -35,17 +37,17 @@ const router = createBrowserRouter([
 						<Home />
 					</ProtectedRoute>
 				),
-				loader: ordersLoader,
+				loader: () => ordersLoader(url),
 			},
 			{
 				path: 'auth/login',
 				element: <Login />,
-				action: loginAction,
+				action: () => loginAction(url),
 			},
 			{
 				path: 'products',
 				id: 'products',
-				loader: productsLoader,
+				loader: () => productsLoader(url),
 				children: [
 					{
 						index: true,
@@ -54,19 +56,19 @@ const router = createBrowserRouter([
 					{
 						path: 'edit/:productId',
 						element: <EditProduct />,
-						loader: productLoader,
-						action: manipulateProduct,
+						loader: () => productLoader(url),
+						action: () => manipulateProduct(url),
 					},
 				],
 			},
 			{
 				path: 'create-product',
 				element: <AddProduct />,
-				action: manipulateProduct,
+				action: () => manipulateProduct(url),
 			},
 			{
 				path: 'delete/:productId',
-				action: deleteProduct,
+				action: () => deleteProduct(url),
 			},
 		],
 	},

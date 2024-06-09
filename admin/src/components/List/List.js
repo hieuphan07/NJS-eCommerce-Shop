@@ -69,28 +69,25 @@ const List = () => {
 export default List;
 
 // products loader
-export async function loader() {
-	const response = await fetch('http://localhost:5500/products');
+export async function loader(url) {
+	const response = await fetch(`${url}products`);
 	if (!response.ok) return console.log('Something went wrong');
 	return response;
 }
 
 // action delete product
-export async function action({ request, params }) {
+export async function action(url, { request, params }) {
 	try {
 		const { productId } = params;
 		const isConfirm = window.confirm('Are you sure?');
 		if (isConfirm) {
-			const response = await fetch(
-				`http://localhost:5500/products/${productId}`,
-				{
-					method: 'DELETE',
-					credentials: 'include',
-				}
-			);
+			const response = await fetch(`${url}products/${productId}`, {
+				method: 'DELETE',
+				credentials: 'include',
+			});
 
 			// check response status
-			console.log()
+			console.log();
 
 			if (!response.ok) {
 				throw json(

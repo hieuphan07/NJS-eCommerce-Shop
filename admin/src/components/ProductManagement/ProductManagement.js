@@ -102,12 +102,12 @@ const ProductManagement = () => {
 
 export default ProductManagement;
 
-export async function action({ request, params }) {
+export async function action(url, { request, params }) {
 	const { productId } = params;
 	const { method } = request;
 
-	const ADD_PRODUCT_URL = 'http://localhost:5500/products/create-product';
-	const EDIT_PRODUCT_URL = `http://localhost:5500/products/${productId}/edit`;
+	const ADD_PRODUCT_URL = `${url}products/create-product`;
+	const EDIT_PRODUCT_URL = `${url}products/${productId}/edit`;
 
 	const formData = await request.formData();
 	const imageFiles = formData.getAll('images');
@@ -143,9 +143,9 @@ export async function action({ request, params }) {
 	return redirect('/products');
 }
 
-export async function loader({ request, params }) {
+export async function loader(url, { request, params }) {
 	const { productId } = params;
-	const response = await fetch(`http://localhost:5500/products/${productId}`);
+	const response = await fetch(`${url}products/${productId}`);
 	if (!response.ok) {
 		throw json({ message: 'Not found!' }, { status: 404 });
 	}

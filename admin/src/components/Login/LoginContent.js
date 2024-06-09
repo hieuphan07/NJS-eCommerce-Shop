@@ -28,13 +28,13 @@ const LoginContent = () => {
 
 export default LoginContent;
 
-export async function action({ request, params }) {
+export async function action(url, { request, params }) {
 	const formData = Object.fromEntries(await request.formData());
 	const user = {
 		email: formData.email,
 		password: formData.password,
 	};
-	const response = await fetch('http://localhost:5500/auth/login', {
+	const response = await fetch(`${url}auth/login`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
