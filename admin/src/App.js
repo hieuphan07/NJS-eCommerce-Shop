@@ -19,7 +19,7 @@ import {
 import { loader as ordersLoader } from './pages/Home';
 import { action as deleteProduct } from './components/List/List';
 
-const url = 'https://ecommerce-shop-5f0427530cdd.herokuapp.com/';
+const url = 'https://ecommerce-shop-5f0427530cdd.herokuapp.com/'; // Change url to "http://localhost:5500/" to use local host
 
 const router = createBrowserRouter([
 	{
